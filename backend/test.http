@@ -1,0 +1,76 @@
+### get users
+GET localhost:3001/api/users
+
+### get blogs
+GET localhost:3001/api/blogs
+
+
+### create blogs
+POST localhost:3001/api/blogs
+Content-Type: application/json
+
+{ 
+  "title": "React patterns",
+  "author": "Michael Chan",
+  "url": "https://reactpatterns.com/",
+  "userId": "66cb7dc89f42af6efbe3cf75"
+} 
+
+
+### create blogs without token 
+POST localhost:3001/api/blogs
+Content-Type: application/json
+
+{ 
+  "title": "React patterns",
+  "author": "Michael Chan",
+  "url": "https://reactpatterns.com/"
+} 
+
+
+### create blogs without userId
+POST localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Iml1cnkiLCJpZCI6IjY2Y2Y3YTM1MDRkNTM5Y2VkOTBlM2ZhOCIsImlhdCI6MTcyNDk0NTczNH0.aLL2nsYlFMcIpqrNPDKr2o0lUmA65tMCVh7uY2g5IT4
+
+{ 
+  "title": "React patterns",
+  "author": "Michael Chan",
+  "url": "https://reactpatterns.com/"
+} 
+
+### 
+POST localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Go To Statement Considered Harmful",
+  "author": "Edsger W. Dijkstra",
+  "url": "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.htm",
+  "userId": "66cb7dc89f42af6efbe3cf75"
+}
+
+### user login
+POST localhost:3001/api/login
+Content-Type: application/json
+
+{
+  "username": "iury",
+  "password": "senha123"
+}
+
+### user creation
+
+POST localhost:3001/api/users
+Content-Type: application/json
+
+{
+  "username": "iury",
+  "name": "iury",
+  "password": "senha123"
+}
+
+
+### test reset
+
+GET localhost:3001/api/testing/reset

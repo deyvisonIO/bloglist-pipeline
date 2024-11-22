@@ -1,0 +1,76 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  simple_deployment_pipeline:
+    runs-on: ubuntu-20.04 
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Backend dependencies
+        run: npm run backend:install 
+      - name: Install Frontend dependencies
+        run: npm run frontend:install 
+      - name: Check style
+        run: npm run eslint
+      - name: create env file
+        run: |
+          cd ./backend
+          touch .env
+          echo MONGODB_URL=${{ secrets.MONGODB_URL}} >> .env
+          echo TEST_MONGODB_URL=${{ secrets.TEST_MONGODB_URL}} >> .env
+          echo PORT=3001 >> .env
+          echo SECRET=${{ secrets.SECRET }} >> .env
+      - name: Backend tests 
+        run: npm run backend:test
+      - name: Frontend tests 
+        run: npm run frontend:test
+      - name: Build
+        if: success()
+        run: npm run build
+      - name: Trigger deployment
+        if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
+        run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+  tag_release:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-20.04
+    steps:  
+      - uses: actions/checkout@v4
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.71.0
+        if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
+          DEFAULT_BRANCH: main
+  notify_discord:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Discord notify success
+        if: ${{ success() && github.event_name == 'push' }}
+        uses: Ilshidur/action-discord@0.3.2
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with: 
+          args: |
+            "✅ Deployment was sucessful"
+
+      - name: Discord notify error
+        if: ${{ failure() && github.event_name == 'push' }} 
+        uses: Ilshidur/action-discord@0.3.2
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with: 
+          args: |
+            "❌ Deployment failed"
