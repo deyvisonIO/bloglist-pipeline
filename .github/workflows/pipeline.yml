@@ -32,7 +32,7 @@ jobs:
           echo SECRET=${{ secrets.SECRET }} >> .env
       - name: check env file
         run: |
-          head ./backend/.env 
+          cat ./backend/.env 
       - name: Tests
         run: npm run test
       - name: Build
