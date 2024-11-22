@@ -26,10 +26,10 @@ jobs:
         run: |
           cd ./backend
           touch .env
-          echo MONGODB_URL=${{ secrets.MONGODB_URL}} >> .env
-          echo TEST_MONGODB_URL=${{ secrets.TEST_MONGODB_URL}} >> .env
           echo PORT=3001 >> .env
           echo SECRET=${{ secrets.SECRET }} >> .env
+          echo MONGODB_URL=${{ secrets.MONGODB_URL }} >> .env
+          echo TEST_MONGODB_URL=${{ secrets.TEST_MONGODB_URL }} >> .env
       - name: check env file
         run: |
           cat ./backend/.env 
