@@ -30,6 +30,9 @@ jobs:
           echo TEST_MONGODB_URL=${{ secrets.TEST_MONGODB_URL}} >> .env
           echo PORT=3001 >> .env
           echo SECRET=${{ secrets.SECRET }} >> .env
+      - name: check env file
+        run: |
+          head .env 
       - name: Tests
         run: npm run test
       - name: Build
