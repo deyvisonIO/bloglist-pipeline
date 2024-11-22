@@ -17,11 +17,11 @@ jobs:
         with:
           node-version: '20'
       - name: Install Backend dependencies
-        run: npm run backend:install 
+        run: npm run install-dependencies:backend 
       - name: Install Frontend dependencies
-        run: npm run frontend:install 
+        run: npm run install-dependencies:frontend 
       - name: Check style
-        run: npm run eslint
+        run: npm run lint
       - name: create env file
         run: |
           cd ./backend
@@ -30,10 +30,8 @@ jobs:
           echo TEST_MONGODB_URL=${{ secrets.TEST_MONGODB_URL}} >> .env
           echo PORT=3001 >> .env
           echo SECRET=${{ secrets.SECRET }} >> .env
-      - name: Backend tests 
-        run: npm run backend:test
-      - name: Frontend tests 
-        run: npm run frontend:test
+      - name: Tests
+        run: npm run test
       - name: Build
         if: success()
         run: npm run build

@@ -9,6 +9,9 @@ const blogsRouter = require('./controllers/blogs')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 
+
+app.use(express.static("dist"));
+
 mongoose.connect(MONGODB_URL).then(() => {
   console.log("Database connected!")
 }).catch((error) => {
