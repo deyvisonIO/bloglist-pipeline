@@ -8,6 +8,13 @@ on:
     branches: [main]
     types: [opened, synchronize]
 
+
+env:
+  PORT: "3001"
+  SECRET: ${{ secrets.SECRET }}
+  MONGODB_URL: ${{ secrets.MONGODB_URL }}
+  TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
+
 jobs:
   simple_deployment_pipeline:
     runs-on: ubuntu-20.04 
@@ -22,19 +29,13 @@ jobs:
         run: npm run install-dependencies:frontend 
       - name: Check style
         run: npm run lint
-      - name: create env file
-        run: |
-          cd ./backend
-          touch .env
-          echo PORT=3001 >> .env
-          echo SECRET=${{ secrets.SECRET }} >> .env
-          echo MONGODB_URL=${{ secrets.MONGODB_URL }} >> .env
-          echo TEST_MONGODB_URL=${{ secrets.TEST_MONGODB_URL }} >> .env
-      - name: check env file
-        run: |
-          cat ./backend/.env 
       - name: Tests
         run: npm run test
+        env:
+          PORT: "3001"
+          SECRET: ${{ secrets.SECRET }}
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
+          TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
       - name: Build
         if: success()
         run: npm run build
