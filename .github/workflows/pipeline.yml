@@ -32,7 +32,7 @@ jobs:
       - name: Tests frontend
         run: npm run test:frontend
       - name: Tests backend
-        run: npm run tes:backend
+        run: npm run test:backend
         env:
           PORT: "3001"
           SECRET: ${{ secrets.SECRET }}
