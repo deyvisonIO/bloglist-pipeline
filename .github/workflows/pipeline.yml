@@ -31,7 +31,6 @@ jobs:
         run: npm run lint
       - name: Cypress run
         uses: cypress-io/github-action@v3
-        run: npm run test 
         with:
           start: npm run start:server
           project: ./e2e
