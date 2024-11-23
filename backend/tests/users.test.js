@@ -1,4 +1,4 @@
-const { describe, test, beforeEach, after } = require("node:test");
+const { describe, test, beforeEach, after, before } = require("node:test");
 const assert = require("node:assert")
 const mongoose = require("mongoose")
 const { MONGODB_URL } = require("../utils/config") 
@@ -9,9 +9,10 @@ const bcrypt = require("bcrypt")
 
 const api = supertest(app);
 
-mongoose.connect(MONGODB_URL);
 
-
+before(async () => {
+  await mongoose.connect(MONGODB_URL);
+})
 
 describe("When there's initialy one user in the database", { timeout: 50000 }, () => {
   beforeEach(async () => {

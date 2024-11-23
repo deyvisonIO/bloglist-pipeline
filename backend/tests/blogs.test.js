@@ -50,9 +50,10 @@ const initialBlogs = [
 ];
 
 
-mongoose.connect(MONGODB_URL);
+
 
 before(async () => {
+  await mongoose.connect(MONGODB_URL);
   await User.deleteMany({});
 
   const passwordHash = await bcrypt.hash("rootpassword", 10);
