@@ -6,6 +6,7 @@
   "scripts": {
     "install-dependencies:frontend": "cd ./frontend && npm install",
     "install-dependencies:backend": "cd ./backend && npm install",
+    "install-dependencies:e2e": "cd ./e2e && npm install",
     "lint": "cd ./frontend && npm run lint && cd ../backend && npm run lint",
     "build": "cd ./frontend && npm run build && rm -rf ../backend/dist && mv ./dist ../backend/",
     "test:frontend": "cd ./frontend && npm run test",

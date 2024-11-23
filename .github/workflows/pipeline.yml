@@ -33,12 +33,8 @@ jobs:
         uses: cypress-io/github-action@v3
         with:
           start: npm run start:server
-          install-command: |
-            cd ./e2e
-            npm install
-          command: |
-            cd ./e2e
-            npm run test
+          install-command: npm run install-dependencies:e2e
+          command: npm run test:e2e
           project: ./e2e
           browser: chrome
           wait-on: "http://localhost:6969"
