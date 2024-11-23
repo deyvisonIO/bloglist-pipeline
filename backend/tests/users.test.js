@@ -1,4 +1,4 @@
-const { describe, test, beforeEach } = require("node:test");
+const { describe, test, beforeEach, after } = require("node:test");
 const assert = require("node:assert")
 const mongoose = require("mongoose")
 const { MONGODB_URL } = require("../utils/config") 
@@ -81,3 +81,6 @@ describe("When there's initialy one user in the database", () => {
   })
 });
 
+after(async () => {
+  await mongoose.connection.close()
+})

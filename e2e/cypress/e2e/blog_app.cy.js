@@ -8,7 +8,7 @@ describe('blog app', () => {
     cy.request('POST', 'http://localhost:3001/api/testing/reset')
     cy.request('POST', 'http://localhost:3001/api/users/', user)
 
-    cy.visit('http://localhost:5173' )
+    cy.visit('http://localhost:3001/' )
   })
 
   it('frontend loads', () => {

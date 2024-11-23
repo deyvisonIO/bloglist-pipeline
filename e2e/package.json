@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "cypress.config.js",
+  "type": "module",
   "scripts": {
-    "start": "cd ../backend && npm start && cd ../e2e && wait-on http://localhost:3001 && cypress run", 
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "cypress run", 
+    "start:server": "cd ../backend && npm run start:test ", 
+    "test": "npm run start"
   },
   "author": "",
   "license": "ISC",

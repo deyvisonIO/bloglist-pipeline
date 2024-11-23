@@ -184,14 +184,14 @@ describe("creation of a blog", () => {
 })
 
 describe("deletion of a blog", () => {
-  test("succeeds with status 204 if id is valid", async () => {
+  test("succeeds with status 200 if id is valid", async () => {
     const response = await api.post("/api/login").send({ username: "root", password: "rootpassword" });
     const user = response.body;
 
     const blog = await Blog.findOne();
     const blogId = blog.toJSON().id
 
-    await api.delete("/api/blogs/" + blogId).set("Authorization", "Bearer " + user.token).expect(204);
+    await api.delete("/api/blogs/" + blogId).set("Authorization", "Bearer " + user.token).expect(200);
     const blogs = await Blog.find({}); 
     
     assert.strictEqual(blogs.length, 5);
@@ -199,7 +199,7 @@ describe("deletion of a blog", () => {
 })
 
 describe("update of a blog", () => {
-  test("succeeds with status 204 if id is valid", async () => {
+  test("succeeds with status 200 if id is valid", async () => {
     const response = await api.post("/api/login").send({ username: "root", password: "rootpassword" });
     const user = response.body;
 
@@ -207,7 +207,7 @@ describe("update of a blog", () => {
     const blogId = blog.toJSON().id;
     const numberOfLikes = 42059;
 
-    await api.put("/api/blogs/" + blogId).set("Authorization", "Bearer " + user.token).send({ likes: numberOfLikes }).expect(204);
+    await api.put("/api/blogs/" + blogId).set("Authorization", "Bearer " + user.token).send({ likes: numberOfLikes }).expect(200);
     const updatedBlog = await Blog.findById(blogId);
     
     assert.strictEqual(updatedBlog.likes, numberOfLikes);
