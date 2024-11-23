@@ -38,6 +38,7 @@ jobs:
           project: ./e2e
           browser: chrome
           wait-on: "http://localhost:6969"
+          wait-on-timeout: 240
         env:
           PORT: "6969"
           SECRET: ${{ secrets.SECRET }}
