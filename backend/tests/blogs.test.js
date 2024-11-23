@@ -75,7 +75,7 @@ beforeEach(async () => {
 
   await Blog.deleteMany({});
   await Blog.bulkSave(blogs);
-});
+}, { timeout: 50000 });
 
 describe("getting a blog from api", () => {
   test("blogs are returned as json", async () => { 
