@@ -29,8 +29,10 @@ jobs:
         run: npm run install-dependencies:frontend 
       - name: Check style
         run: npm run lint
-      - name: Tests
-        run: npm run test
+      - name: Tests frontend
+        run: npm run test:frontend
+      - name: Tests backend
+        run: npm run tes:backend
         env:
           PORT: "3001"
           SECRET: ${{ secrets.SECRET }}
