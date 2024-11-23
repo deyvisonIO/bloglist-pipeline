@@ -36,9 +36,6 @@ jobs:
           install-command: npm run install-dependencies:e2e
           command: npm run test:e2e
           project: ./e2e
-          browser: chrome
-          wait-on: "http://[::1]:6969"
-          wait-on-timeout: 240
         env:
           PORT: "6969"
           SECRET: ${{ secrets.SECRET }}
