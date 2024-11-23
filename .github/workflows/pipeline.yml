@@ -24,9 +24,13 @@ jobs:
         with:
           node-version: '20'
       - name: Install Backend dependencies
-        run: npm run install-dependencies:backend 
+        run: |
+          cd ./backend
+          npm ci
       - name: Install Frontend dependencies
-        run: npm run install-dependencies:frontend 
+        run: |
+          cd ./frontend
+          npm ci
       - name: Check style
         run: npm run lint
       - name: Tests frontend
