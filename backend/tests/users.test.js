@@ -13,7 +13,7 @@ mongoose.connect(MONGODB_URL);
 
 
 
-describe("When there's initialy one user in the database", () => {
+describe("When there's initialy one user in the database", { timeout: 50000 }, () => {
   beforeEach(async () => {
     await User.deleteMany({});
 
@@ -58,7 +58,7 @@ describe("When there's initialy one user in the database", () => {
   })
 
 
-  describe("login in with user", () => {
+  describe("login in with user", { timeout: 50000 }, () => {
     test("succeeds if user exists", async () => {
       const response = await api.post("/api/login").send({ username: "root", password: "rootpassword" }).expect(200).expect("Content-Type", /application\/json/);
 

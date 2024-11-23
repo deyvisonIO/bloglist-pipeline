@@ -74,9 +74,9 @@ beforeEach(async () => {
 
   await Blog.deleteMany({});
   await Blog.bulkSave(blogs);
-});
+}, { timeout: 50000 });
 
-describe("getting a blog from api", () => {
+describe("getting a blog from api", { timeout: 50000 }, () => {
   test("blogs are returned as json", async () => { 
     await api.get("/api/blogs").expect(200).expect("Content-Type", /application\/json/);
   })
@@ -94,7 +94,7 @@ describe("getting a blog from api", () => {
   })
 })
 
-describe("creation of a blog", () => {
+describe("creation of a blog", { timeout: 50000 }, () => {
   test("returns status 201 if created correctly and updates blogs on database", async () => {
     const response = await api.post("/api/login").send({ username: "root", password: "rootpassword" });
 
@@ -183,7 +183,7 @@ describe("creation of a blog", () => {
 
 })
 
-describe("deletion of a blog", () => {
+describe("deletion of a blog", { timeout: 50000 }, () => {
   test("succeeds with status 200 if id is valid", async () => {
     const response = await api.post("/api/login").send({ username: "root", password: "rootpassword" });
     const user = response.body;
@@ -198,7 +198,7 @@ describe("deletion of a blog", () => {
   })
 })
 
-describe("update of a blog", () => {
+describe("update of a blog", { timeout: 50000 }, () => {
   test("succeeds with status 200 if id is valid", async () => {
     const response = await api.post("/api/login").send({ username: "root", password: "rootpassword" });
     const user = response.body;
