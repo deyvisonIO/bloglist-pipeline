@@ -45,7 +45,7 @@ jobs:
       - name: Start Server for Cypress Tests
         run: npm run start:server &
         env:
-          PORT: "6969"
+          PORT: "3001"
           SECRET: ${{ secrets.SECRET }}
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
