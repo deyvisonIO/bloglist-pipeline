@@ -1,3 +1,4 @@
+/* eslint jest/expect-expect: 0 */
 // const { describe, test, beforeEach, after, before } = require("node:test");
 // const assert = require("node:assert")
 const mongoose = require("mongoose")
