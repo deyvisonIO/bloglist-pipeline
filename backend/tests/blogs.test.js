@@ -1,5 +1,5 @@
-const { describe, test, beforeEach, before, after } = require("node:test");
-const assert = require("node:assert")
+// const { describe, test, beforeEach, before, after } = require("node:test");
+// const assert = require("node:assert")
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
 const { MONGODB_URL } = require("../utils/config") 
@@ -52,8 +52,9 @@ const initialBlogs = [
 
 
 
-before(async () => {
+beforeAll(async () => {
   await mongoose.connect(MONGODB_URL);
+
   await User.deleteMany({});
 
   const passwordHash = await bcrypt.hash("rootpassword", 10);
@@ -75,7 +76,7 @@ beforeEach(async () => {
 
   await Blog.deleteMany({});
   await Blog.bulkSave(blogs);
-}, { timeout: 50000 });
+});
 
 describe("getting a blog from api", () => {
   test("blogs are returned as json", async () => { 
@@ -84,14 +85,18 @@ describe("getting a blog from api", () => {
 
   test("there are 6 blogs", async () => {
     const response = await api.get("/api/blogs");
-    assert.strictEqual(response._body.length, 6)
+    expect(response._body).toHaveLength(6)
+    // assert.strictEqual(response._body.length, 6)
   })
 
   test("blogs have id instead of _id", async () => {
     const response = await api.get("/api/blogs");
     const blogs = response.body;
+    for(const blog of blogs) {
+      expect(blog).toHaveProperty("id");
+    }
 
-    blogs.forEach(blog => assert.strictEqual(Object.hasOwn(blog, "id"), true));
+    // blogs.forEach(blog => assert.strictEqual(Object.hasOwn(blog, "id"), true));
   })
 })
 
@@ -112,7 +117,9 @@ describe("creation of a blog", () => {
     const getResponse = await api.get("/api/blogs");
     const blogs = getResponse.body;
 
-    assert.deepStrictEqual(blogs.length, 7);
+    expect(blogs).toHaveLength(7)
+
+    // assert.deepStrictEqual(blogs.length, 7);
   })
 
 
@@ -127,15 +134,19 @@ describe("creation of a blog", () => {
     const response = await api.post("/api/blogs").send(blogToBeAdded).expect(400).expect("Content-Type", /application\/json/);
 
     const body = response.body;
+
+    expect(body).toHaveProperty("error")
+    expect(body.error).toEqual("User not found!")
     
-    assert.strictEqual(Object.prototype.hasOwnProperty.call(body, "error"), true);
-    assert.strictEqual(body.error, "User not found!"); 
+    // assert.strictEqual(Object.prototype.hasOwnProperty.call(body, "error"), true);
+    // assert.strictEqual(body.error, "User not found!"); 
 
     const getResponse = await api.get("/api/blogs");
 
     const blogs = getResponse.body;
 
-    assert.deepStrictEqual(blogs.length, 6);
+    expect(blogs).toHaveLength(6)
+    // assert.deepStrictEqual(blogs.length, 6);
   })
 
   test("blog likes default to 0 if not specified", async () => {
@@ -153,8 +164,10 @@ describe("creation of a blog", () => {
 
     const blogs = getResponse.body;
     const blog = blogs.filter(blog => blog.title === "this is a test")[0]
+
+    expect(blog.likes).toEqual(0)
     
-    assert.strictEqual(blog.likes, 0);
+    // assert.strictEqual(blog.likes, 0);
   })
 
   test("api returns 400 code if blog post doesn't have a title", async () => {
@@ -194,8 +207,10 @@ describe("deletion of a blog", () => {
 
     await api.delete("/api/blogs/" + blogId).set("Authorization", "Bearer " + user.token).expect(200);
     const blogs = await Blog.find({}); 
+
+    expect(blogs).toHaveLength(5);
     
-    assert.strictEqual(blogs.length, 5);
+    // assert.strictEqual(blogs.length, 5);
   })
 })
 
@@ -211,10 +226,11 @@ describe("update of a blog", () => {
     await api.put("/api/blogs/" + blogId).set("Authorization", "Bearer " + user.token).send({ likes: numberOfLikes }).expect(200);
     const updatedBlog = await Blog.findById(blogId);
     
-    assert.strictEqual(updatedBlog.likes, numberOfLikes);
+    expect(updatedBlog.likes).toEqual(numberOfLikes)
+    // assert.strictEqual(updatedBlog.likes, numberOfLikes);
   })
 })
 
-after(async () => {
+afterAll(async () => {
   await mongoose.connection.close()
 })

@@ -1,12 +1,13 @@
-const { test, describe } = require("node:test");
-const assert = require("node:assert");
+// const { test, describe } = require("node:test");
+// const assert = require("node:assert");
 const listHelper = require("../utils/list_helper");
 
 test("dummy returns one", () => {
   const blogs = [];
 
   const result = listHelper.dummy(blogs);
-  assert.strictEqual(result, 1);
+  expect(result).toEqual(1)
+  // assert.strictEqual(result, 1);
 });
 
 describe("total likes", () => {
@@ -14,7 +15,8 @@ describe("total likes", () => {
   test("of empty list is zero", () => {
     const result = totalLikes([]);
 
-    assert.strictEqual(result, 0);
+    expect(result).toEqual(0)
+    // assert.strictEqual(result, 0);
   });
 
   test("when list has only one blog equals the likes of that", () => {
@@ -31,7 +33,9 @@ describe("total likes", () => {
 
     const result = totalLikes(listWithOneBlog);
 
-    assert.strictEqual(result, 5);
+    expect(result).toEqual(5)
+
+    // assert.strictEqual(result, 5);
   });
 
   test("of a bigger list is calculated right", () => {
@@ -63,7 +67,8 @@ describe("total likes", () => {
     ];
     const result = totalLikes(listWithMultipleBlogs);
 
-    assert.strictEqual(result, 15);
+    expect(result).toEqual(15)
+    // assert.strictEqual(result, 15);
   });
 });
 
@@ -73,7 +78,8 @@ describe("favoriteBlog", () => {
   test("of empty list is empty object", () => {
     const result = favoriteBlog([]);
 
-    assert.deepStrictEqual(result, {});
+    expect(result).toMatchObject({})
+    // assert.deepStrictEqual(result, {});
   });
 
   test("when list has only one blog equals the likes of that", () => {
@@ -96,8 +102,8 @@ describe("favoriteBlog", () => {
       __v: 0,
     };
     const result = favoriteBlog(listWithOneBlog);
-
-    assert.deepStrictEqual(result, expectedResult);
+    expect(result).toMatchObject(expectedResult)
+    // assert.deepStrictEqual(result, expectedResult);
   });
 
   test("of a bigger list is calculated right", () => {
@@ -138,7 +144,10 @@ describe("favoriteBlog", () => {
     };
     const result = favoriteBlog(listWithMultipleBlogs);
 
-    assert.deepStrictEqual(result, expectedResult);
+
+
+    expect(result).toMatchObject(expectedResult)
+    // assert.deepStrictEqual(result, expectedResult);
   });
 });
 
@@ -147,7 +156,8 @@ describe("most blogs", () => {
   test("of empty list is empty object", () => {
     const result = mostBlogs([]);
 
-    assert.deepStrictEqual(result, {});
+    expect(result).toMatchObject({})
+    // assert.deepStrictEqual(result, {});
   });
 
   test("when list has only one blog equals the author of that", () => {
@@ -164,10 +174,15 @@ describe("most blogs", () => {
 
     const result = mostBlogs(listWithOneBlog);
 
-    assert.deepStrictEqual(result, {
+    expect(result).toMatchObject({
       author: "Edsger W. Dijkstra",
       blogs: 1,
-    });
+    })
+
+    // assert.deepStrictEqual(result, {
+    //   author: "Edsger W. Dijkstra",
+    //   blogs: 1,
+    // });
   });
 
   test("of a bigger list is calculated right", () => {
@@ -222,11 +237,16 @@ describe("most blogs", () => {
       },
     ];
     const result = mostBlogs(listWithMultipleBlogs);
-
-    assert.deepStrictEqual(result, {
+    
+    expect(result).toMatchObject({
       author:  "Robert C. Martin",
       blogs: 3,
-    });
+    })
+
+    // assert.deepStrictEqual(result, {
+    //   author:  "Robert C. Martin",
+    //   blogs: 3,
+    // });
   });
 });
 
@@ -236,7 +256,8 @@ describe("most likes", () => {
   test("of empty list is empty object", () => {
     const result = mostLikes([]);
 
-    assert.deepStrictEqual(result, {});
+    expect(result).toMatchObject({})
+    // assert.deepStrictEqual(result, {});
   });
 
   test("when list has only one blog equals the likes of that", () => {
@@ -256,7 +277,8 @@ describe("most likes", () => {
     };
     const result = mostLikes(listWithOneBlog);
 
-    assert.deepStrictEqual(result, expectedResult);
+    expect(result).toMatchObject(expectedResult)
+    // assert.deepStrictEqual(result, expectedResult);
   });
 
   test("of a bigger list is calculated right", () => {
@@ -317,6 +339,7 @@ describe("most likes", () => {
     };
     const result = mostLikes(listWithMultipleBlogs);
 
-    assert.deepStrictEqual(result, expectedResult);
+    expect(result).toMatchObject(expectedResult)
+    // assert.deepStrictEqual(result, expectedResult);
   });
 })

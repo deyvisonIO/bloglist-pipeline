@@ -1,5 +1,5 @@
-const { describe, test, beforeEach, after, before } = require("node:test");
-const assert = require("node:assert")
+// const { describe, test, beforeEach, after, before } = require("node:test");
+// const assert = require("node:assert")
 const mongoose = require("mongoose")
 const { MONGODB_URL } = require("../utils/config") 
 const app = require("../app")
@@ -10,7 +10,7 @@ const bcrypt = require("bcrypt")
 const api = supertest(app);
 
 
-before(async () => {
+beforeAll(async () => {
   await mongoose.connect(MONGODB_URL);
 })
 
@@ -28,8 +28,8 @@ describe("When there's initialy one user in the database", () => {
     await api.post("/api/users").send({ username: "uniqueUsername", password: "uniquePassword" }).expect(201).expect("Content-Type", /application\/json/ );
 
     const users = await User.find({});
-
-    assert.deepStrictEqual(users.length, 2);
+    expect(users).toHaveLength(2);
+    // assert.deepStrictEqual(users.length, 2);
   });
 
   test("creation fails with a username that already exists", async () => {
@@ -37,7 +37,9 @@ describe("When there's initialy one user in the database", () => {
 
     const users = await User.find({});
 
-    assert.deepStrictEqual(users.length, 1);
+    expect(users).toHaveLength(1)
+
+    // assert.deepStrictEqual(users.length, 1);
   })
 
 
@@ -65,8 +67,11 @@ describe("When there's initialy one user in the database", () => {
 
       const user = response.body;
 
-      assert.strictEqual(Object.prototype.hasOwnProperty.call(user, "token"), true); 
-      assert.strictEqual(Object.prototype.hasOwnProperty.call(user, "username"), true); 
+      expect(user).toHaveProperty("token")
+      expect(user).toHaveProperty("username")
+
+      // assert.strictEqual(Object.prototype.hasOwnProperty.call(user, "token"), true); 
+      // assert.strictEqual(Object.prototype.hasOwnProperty.call(user, "username"), true); 
     })
 
 
@@ -75,13 +80,16 @@ describe("When there's initialy one user in the database", () => {
 
       const user = response.body;
 
-      assert.strictEqual(Object.prototype.hasOwnProperty.call(user, "error"), true); 
-      assert.strictEqual(user.error, "invalid username or password"); 
+      expect(user).toHaveProperty("error")
+      expect(user.error).toEqual("invalid username or password")
+
+      // assert.strictEqual(Object.prototype.hasOwnProperty.call(user, "error"), true); 
+      // assert.strictEqual(user.error, "invalid username or password"); 
 
     })
   })
 });
 
-after(async () => {
+afterAll(async () => {
   await mongoose.connection.close()
 })
