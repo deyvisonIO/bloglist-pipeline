@@ -43,14 +43,13 @@ jobs:
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
       - name: Start Server for Cypress Tests
-        run: npm run start:server &
-        env:
+        run: RUNNER_TRACKING_ID="" && npm run start:server &
           PORT: "3001"
           SECRET: ${{ secrets.SECRET }}
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
       - name: Check if  server is running
-        run: curl "http://localhost:3001/"
+        run: curl -i "http://localhost:3001/"
       - name: Install cypress
         run: |
           cd ./e2e
