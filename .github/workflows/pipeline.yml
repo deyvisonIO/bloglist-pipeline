@@ -49,12 +49,14 @@ jobs:
           SECRET: ${{ secrets.SECRET }}
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
-      - name: Cypress tests 
-        uses: cypress-io/github-action@v6
-        with:
-          working-directory: e2e
-          wait-on: "http://localhost:3001"
-          wait-on-timeout: 180
+      - name: Cypress tests
+        run: npm run test:e2e
+      # - name: Cypress tests 
+      #   uses: cypress-io/github-action@v6
+      #   with:
+      #     working-directory: e2e
+      #     wait-on: "http://localhost:3001"
+      #     wait-on-timeout: 180
       - name: Build
         if: success()
         run: npm run build
