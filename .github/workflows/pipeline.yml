@@ -54,6 +54,7 @@ jobs:
         with:
           working-directory: e2e
           wait-on: "http://localhost:3001/en"
+          wait-on-timeout: 180
       - name: Build
         if: success()
         run: npm run build
