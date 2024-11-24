@@ -49,6 +49,8 @@ jobs:
           SECRET: ${{ secrets.SECRET }}
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
+      - name: Check if  server is running
+        run: curl "http://localhost:3001/"
       - name: Install cypress
         run: |
           cd ./e2e
