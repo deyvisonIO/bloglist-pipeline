@@ -49,6 +49,10 @@ jobs:
           SECRET: ${{ secrets.SECRET }}
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
+      - name: Install cypress
+        run: |
+          cd ./e2e
+          npm ci
       - name: Cypress tests
         run: npm run test:e2e
       # - name: Cypress tests 
