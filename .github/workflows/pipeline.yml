@@ -80,6 +80,10 @@ jobs:
         run: |
           cd ./backend
           npm ci
+      - name: Install cypress
+        run: |
+          cd ./e2e
+          npm ci
       - name: Start Server for Cypress Tests
         # run: RUNNER_TRACKING_ID="" && npm run start:server &
         run: npm run test:e2e 
