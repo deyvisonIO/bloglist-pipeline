@@ -82,7 +82,7 @@ jobs:
           npm ci
       - name: Start Server for Cypress Tests
         # run: RUNNER_TRACKING_ID="" && npm run start:server &
-        run: start: npm run test:e2e 
+        run: npm run test:e2e 
         env:  
           PORT: "3001"
           SECRET: ${{ secrets.SECRET }}
