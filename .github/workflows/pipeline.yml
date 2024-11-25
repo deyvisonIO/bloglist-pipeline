@@ -89,12 +89,12 @@ jobs:
           TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
       - name: Check if  server is running
         run: curl -i "http://127.0.0.1:3001/"
-      - name: Install cypress
-        run: |
-          cd ./e2e
-          npm ci
-      - name: Cypress tests
-        run: npm run test:e2e
+      - name: Cypress tests 
+        uses: cypress-io/github-action@v6
+        with:
+          working-directory: e2e
+          wait-on: "http://127.0.0.1:3001"
+          wait-on-timeout: 180
 
   tag_release:
     needs: [simple_deployment_pipeline]

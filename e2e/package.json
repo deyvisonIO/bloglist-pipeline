@@ -5,13 +5,15 @@
   "main": "cypress.config.js",
   "type": "module",
   "scripts": {
-    "start": "cypress run", 
-    "start:server": "cd ../backend && npm run start:test ", 
-    "test": "npm run start"
+    "start": "cypress run",
+    "start:server": "cd ../backend && npm run start:test ",
+    "test": "npm run start",
+    "newtest": "start-server-and-test start:server http://localhost:3001 start"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^13.16.0"
+    "cypress": "^13.16.0",
+    "start-server-and-test": "^2.0.8"
   }
 }
