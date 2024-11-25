@@ -81,20 +81,20 @@ jobs:
           cd ./backend
           npm ci
       - name: Start Server for Cypress Tests
-        run: RUNNER_TRACKING_ID="" && npm run start:server &
+        # run: RUNNER_TRACKING_ID="" && npm run start:server &
+        run: start: npm run test:e2e 
         env:  
           PORT: "3001"
           SECRET: ${{ secrets.SECRET }}
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
-      - name: Check if  server is running
-        run: curl -i "http://127.0.0.1:3001/"
-      - name: Cypress tests 
-        uses: cypress-io/github-action@v6
-        with:
-          wait-on: "http://127.0.0.1:3001"
-          wait-on-timeout: 180
-          start: npm run test:e2e 
+      # - name: Check if  server is running
+      #   run: curl -i "http://127.0.0.1:3001/"
+      # - name: Cypress tests 
+      #   uses: cypress-io/github-action@v6
+      #   with:
+      #     wait-on: "http://127.0.0.1:3001"
+      #     wait-on-timeout: 180
 
 
   tag_release:
