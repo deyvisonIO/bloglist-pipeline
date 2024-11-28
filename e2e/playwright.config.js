@@ -71,7 +71,7 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: {
     // command: 'npm run start:test',
-    command: 'npx crossenv NODE_ENV=test TEST_MONGODB_URL=process.env.TEST_MONGODB_URL PORT=process.env.PORT SECRET=proccess.env.SECRET node index.js',
+    command: 'npx cross-env NODE_ENV=test TEST_MONGODB_URL=process.env.TEST_MONGODB_URL PORT=process.env.PORT SECRET=process.env.SECRET node index.js',
     cwd: '../backend',
     // url: 'http://127.0.0.1:6969',
     url: 'http://[::1]:6969',
