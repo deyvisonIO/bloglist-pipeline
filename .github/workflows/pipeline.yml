@@ -57,7 +57,9 @@ jobs:
           npm ci
           npx playwright install --with-deps
       - name: Playwright tests
-        run: npm run test:e2e
+        run: |
+          cd ./e2e
+          npm run test:playwright
         env:  
           PORT: "6969"
           SECRET: ${{ secrets.SECRET }}

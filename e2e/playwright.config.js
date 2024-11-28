@@ -70,8 +70,8 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    // command: 'npm run start:test',
-    // cwd: '../backend',
+    command: 'npm run start:test',
+    cwd: '../backend',
     // url: 'http://127.0.0.1:6969',
     url: 'http://localhost:6969',
     timeout: 120 * 1000,
