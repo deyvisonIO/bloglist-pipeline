@@ -50,7 +50,7 @@ jobs:
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
       - name: Check if  server is running
-        run: curl -i "http://localhost:6969/"
+        run: curl -i "http://[::1]:6969/"
       - name: Install playwright 
         run: |
           cd ./e2e

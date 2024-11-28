@@ -75,7 +75,8 @@ export default defineConfig({
     // url: 'http://127.0.0.1:6969',
     url: 'http://[::1]:6969',
     timeout: 120 * 1000,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true
+    // reuseExistingServer: !process.env.CI,
   },
 });
 
