@@ -42,15 +42,15 @@ jobs:
           SECRET: ${{ secrets.SECRET }}
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
-      - name: Start Server for Cypress Tests
-        run: RUNNER_TRACKING_ID="" && npm run start:server &
+      - name: Start Server for Playwright Tests
+        run: npm run start:server &
         env:  
           PORT: "3001"
           SECRET: ${{ secrets.SECRET }}
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
-      # - name: Check if  server is running
-      #   run: curl -i "http://localhost:3001/"
+      - name: Check if  server is running
+        run: curl -i "http://localhost:3001/"
       - name: Install playwright 
         run: |
           cd ./e2e
@@ -58,6 +58,11 @@ jobs:
           npx playwright install --with-deps
       - name: Playwright tests
         run: npm run test:e2e
+        env:  
+          PORT: "3001"
+          SECRET: ${{ secrets.SECRET }}
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
+          TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
       # - name: Cypress tests 
       #   uses: cypress-io/github-action@v6
       #   with:

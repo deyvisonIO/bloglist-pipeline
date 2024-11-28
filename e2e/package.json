@@ -9,7 +9,7 @@
     "start:server": "cd ../backend && npm run start:test ",
     "test": "npm run start",
     "newtest": "start-server-and-test start:server http://localhost:3001 start",
-    "test-playwright": "playwright test --workers=1"
+    "test:playwright": "playwright test --workers=1"
   },
   "author": "",
   "license": "ISC",
