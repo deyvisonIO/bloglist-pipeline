@@ -12,6 +12,7 @@
     "test:frontend": "cd ./frontend && npm run test",
     "test:backend": "cd ./backend && npm run test",
     "test:e2e": "cd ./e2e && npm run newtest",
+    "test:e2e": "cd ./e2e && npm run test-playwright",
     "start:server": "cd ./backend && npm run start:test",
     "test": "npm run test:frontend && npm run test:backend"
   },

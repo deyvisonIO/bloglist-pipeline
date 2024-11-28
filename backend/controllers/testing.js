@@ -25,12 +25,15 @@ testingRouter.post('/reset-users', async (request, response) => {
 
 testingRouter.post('/create-blog', async (request, response) => {
   const body = request.body
+
   const user = new User({
     name: 'test2',
     username: 'test2',
     password: 'test2'
   })
   const addedUser = await user.save()
+
+  console.log(body)
 
   const blog = new Blog({
     title: body.title,

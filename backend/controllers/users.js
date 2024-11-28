@@ -13,11 +13,13 @@ usersRouter.post("/", async (req, res) => {
   const {username, password, name }= req.body;
 
   if(!username || !password || username.length < 3 || password.length < 3) {
-    res.status(400).json({ error: "username our password malformed"});
+    res.status(400).json({ error: "username or password malformed"});
     return;
   }
 
   const isUsernameInDB = await User.findOne({ username })
+
+  console.log(isUsernameInDB)
 
   if(isUsernameInDB) {
     res.status(409).json({ error: "Username already registered"});

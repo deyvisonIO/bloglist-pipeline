@@ -42,21 +42,21 @@ jobs:
           SECRET: ${{ secrets.SECRET }}
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
-      # - name: Start Server for Cypress Tests
-      #   run: RUNNER_TRACKING_ID="" && npm run start:server &
-      #   env:  
-      #     PORT: "3001"
-      #     SECRET: ${{ secrets.SECRET }}
-      #     MONGODB_URL: ${{ secrets.MONGODB_URL }}
-      #     TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
+      - name: Start Server for Cypress Tests
+        run: RUNNER_TRACKING_ID="" && npm run start:server &
+        env:  
+          PORT: "3001"
+          SECRET: ${{ secrets.SECRET }}
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
+          TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
       # - name: Check if  server is running
       #   run: curl -i "http://localhost:3001/"
-      # - name: Install cypress
-      #   run: |
-      #     cd ./e2e
-      #     npm ci
-      # - name: Cypress tests
-      #   run: npm run test:e2e
+      - name: Install playwright 
+        run: |
+          cd ./e2e
+          npm ci
+      - name: Cypress tests
+        run: npm run test:e2e
       # - name: Cypress tests 
       #   uses: cypress-io/github-action@v6
       #   with:
@@ -69,36 +69,6 @@ jobs:
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
-  cypress_test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: Install Backend dependencies
-        run: |
-          cd ./backend
-          npm ci
-      - name: Install cypress
-        run: |
-          cd ./e2e
-          npm ci
-      - name: Start Server for Cypress Tests
-        # run: RUNNER_TRACKING_ID="" && npm run start:server &
-        run: npm run test:e2e 
-        env:  
-          PORT: "3001"
-          SECRET: ${{ secrets.SECRET }}
-          MONGODB_URL: ${{ secrets.MONGODB_URL }}
-          TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
-      # - name: Check if  server is running
-      #   run: curl -i "http://127.0.0.1:3001/"
-      # - name: Cypress tests 
-      #   uses: cypress-io/github-action@v6
-      #   with:
-      #     wait-on: "http://127.0.0.1:3001"
-      #     wait-on-timeout: 180
 
 
   tag_release:
