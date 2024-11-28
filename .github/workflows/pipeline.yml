@@ -55,7 +55,8 @@ jobs:
         run: |
           cd ./e2e
           npm ci
-      - name: Cypress tests
+          npx playwright install --with-deps
+      - name: Playwright tests
         run: npm run test:e2e
       # - name: Cypress tests 
       #   uses: cypress-io/github-action@v6
