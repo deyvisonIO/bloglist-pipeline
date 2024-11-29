@@ -78,43 +78,14 @@ jobs:
         if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
   playwright_test:
-    runs-on: ubuntu-latest 
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: Install Backend dependencies
-        run: |
-          cd ./backend
-          npm ci
-      - name: Install Frontend dependencies
-        run: |
-          cd ./frontend
-          npm ci
-      # - name: Start Server for Playwright Tests
-      #   run: npm run start:server &
-      #   env:  
-      #     PORT: "6969"
-      #     SECRET: ${{ secrets.SECRET }}
-      #     MONGODB_URL: ${{ secrets.MONGODB_URL }}
-      #     TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
-      # - name: Check if  server is running
-      #   run: curl -i "http://[::1]:6969/"
-      - name: Install playwright 
-        run: |
-          cd ./e2e
-          npm ci
-          npx playwright install --with-deps
-      - name: Playwright tests
-        run: |
-          cd ./e2e
-          npm run test:playwright
-        env:  
-          PORT: "6969"
-          SECRET: ${{ secrets.SECRET }}
-          MONGODB_URL: ${{ secrets.MONGODB_URL }}
-          TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
+    uses: ./.github/workflows/playwright.yml
+    with:
+      node-version: "20.16.0"
+    secrets:
+      PORT: "3003"
+      SECRET: ${{ secrets.SECRET }}
+      MONGODB_URL: ${{ secrets.MONGODB_URL }}
+      TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-20.04
