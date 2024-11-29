@@ -26,6 +26,10 @@ app.use('/api/blogs', middleware.userExtractor, blogsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 
+app.get('/health', (_, res) => {
+  res.send('ok')
+})
+
 if(process.env.NODE_ENV === "test") {
   console.log("testing evironment")
   const testingRouter = require("./controllers/testing")
