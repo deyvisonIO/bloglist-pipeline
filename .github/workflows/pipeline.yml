@@ -42,15 +42,19 @@ jobs:
           SECRET: ${{ secrets.SECRET }}
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
-      # - name: Start Server for Playwright Tests
-      #   run: npm run start:server &
-      #   env:  
-      #     PORT: "6969"
-      #     SECRET: ${{ secrets.SECRET }}
-      #     MONGODB_URL: ${{ secrets.MONGODB_URL }}
-      #     TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
-      # - name: Check if  server is running
-      #   run: curl -i "http://[::1]:6969/"
+      - name: Build app
+        run: |
+          cd ./frontend
+          npm run build
+      - name: Start Server for Playwright Tests
+        run: npm run start:server &
+        env:  
+          PORT: "3003"
+          SECRET: ${{ secrets.SECRET }}
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
+          TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
+      - name: Check if  server is running
+        run: curl -i "http://localhost:3003"
       - name: Install playwright 
         run: |
           cd ./e2e
@@ -61,7 +65,7 @@ jobs:
           cd ./e2e
           npm run test:playwright
         env:  
-          PORT: "6969"
+          PORT: "3003"
           SECRET: ${{ secrets.SECRET }}
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
