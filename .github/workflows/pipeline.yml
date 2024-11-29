@@ -54,7 +54,7 @@ jobs:
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
       - name: Check if  server is running
-        run: curl -i "http://localhost:3003"
+        run: curl -i "http://localhost:3003/api/testing/reset"
       - name: Install playwright 
         run: |
           cd ./e2e
