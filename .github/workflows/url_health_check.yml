@@ -1,0 +1,34 @@
+name: Url Health Check
+
+on:
+  schedule:
+    - cron: '30 8,20 * * *'
+
+jobs:
+  url_health_check:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check service health 
+        uses: jtalk/url-health-check-action@v4
+        with:
+          url: https://bloglist-pipeline-ucto.onrender.com/api/health
+          max-attempts: 3
+          retry-delay: 5s
+          follow-redirect: true
+
+      - name: Notify success on Discord
+        if: ${{ success() }}
+        uses: Ilshidur/action-discord@0.3.2
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          args: |
+            "The project deyvisonIO/bloglist-pipeline has passed through health check! ✅"
+      - name: Notify failure on Discord
+        if: ${{ failure() }}
+        uses: Ilshidur/action-discord@0.3.2
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          args: |
+            "The project deyvisonIO/bloglist-pipeline has failed health check! ❌"
