@@ -51,8 +51,6 @@ jobs:
           SECRET: ${{ secrets.SECRET }}
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
-      - name: Check if  server is running
-        run: curl -i "http://localhost:3003/api/testing/reset"
       - name: Install playwright 
         run: |
           cd ./e2e
@@ -67,12 +65,12 @@ jobs:
           SECRET: ${{ secrets.SECRET }}
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           TEST_MONGODB_URL: ${{ secrets.TEST_MONGODB_URL }}
-      # - name: Cypress tests 
-      #   uses: cypress-io/github-action@v6
-      #   with:
-      #     working-directory: e2e
-      #     wait-on: "http://localhost:3001"
-      #     wait-on-timeout: 180
+      - name: Cypress tests 
+        uses: cypress-io/github-action@v6
+        with:
+          working-directory: e2e
+          wait-on: "http://localhost:3003"
+          wait-on-timeout: 180
       - name: Build
         if: success()
         run: npm run build
