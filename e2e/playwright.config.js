@@ -10,6 +10,8 @@ import { defineConfig, devices } from '@playwright/test'
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
+  timeout: 10000,
+
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: false,
@@ -18,13 +20,13 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [['html', { open: "never" }]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'http://[::1]:6969',
+    baseURL: 'http://127.0.0.1:3003',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -71,13 +73,12 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: {
     // command: 'npm run start:test',
-    command: 'npx cross-env NODE_ENV=test TEST_MONGODB_URL=process.env.TEST_MONGODB_URL PORT=process.env.PORT SECRET=process.env.SECRET node index.js',
-    cwd: '../backend',
-    // url: 'http://127.0.0.1:6969',
-    url: 'http://[::1]:6969',
+    command: 'cd ../backend && npm run start:test',
+    url: 'http://127.0.0.1:3003',
+    // url: 'http://[::1]:6969',
     timeout: 120 * 1000,
-    reuseExistingServer: true
-    // reuseExistingServer: !process.env.CI,
+    // reuseExistingServer: true
+    reuseExistingServer: !process.env.CI,
   },
 });
 
