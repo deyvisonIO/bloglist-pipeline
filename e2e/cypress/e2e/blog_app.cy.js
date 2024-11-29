@@ -5,10 +5,10 @@ describe('blog app', () => {
       username: 'test',
       password: 'test'
     }
-    cy.request('POST', 'http://127.0.0.1:3001/api/testing/reset')
-    cy.request('POST', 'http://127.0.0.1:3001/api/users/', user)
+    cy.request('POST', 'http://127.0.0.1:3003/api/testing/reset')
+    cy.request('POST', 'http://127.0.0.1:3003/api/users/', user)
 
-    cy.visit('http://127.0.0.1:3001/' )
+    cy.visit('http://127.0.0.1:3003/' )
   })
 
   it('frontend loads', () => {
@@ -103,7 +103,7 @@ describe('blog app', () => {
           url: 'http://www.test2.com'
         }
 
-        cy.request('POST', 'http://127.0.0.1:3001/api/testing/create-blog', newBlog)
+        cy.request('POST', 'http://127.0.0.1:3003/api/testing/create-blog', newBlog)
 
         cy.reload()
       })
@@ -125,7 +125,7 @@ describe('blog app', () => {
 
     describe("with multiple blogs", () => {
       beforeEach(() => {
-        cy.request('POST', 'http://127.0.0.1:3001/api/testing/create-multiple-blogs')
+        cy.request('POST', 'http://127.0.0.1:3003/api/testing/create-multiple-blogs')
         cy.reload()  
       })
 
