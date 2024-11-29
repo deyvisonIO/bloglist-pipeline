@@ -5,19 +5,13 @@
   "main": "cypress.config.js",
   "type": "module",
   "scripts": {
-    "start": "cypress run",
-    "start:server": "cd ../backend && npm run start:test ",
-    "test": "npm run start",
-    "newtest": "start-server-and-test start:server http://localhost:3001 start",
-    "test:playwright": "playwright test --workers=1"
+    "test": "cypress run"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.49.0",
     "@types/node": "^22.10.0",
     "cypress": "^13.16.0",
-    "playwright": "^1.49.0",
     "start-server-and-test": "^2.0.8"
   }
 }
